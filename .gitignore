@@ -3,6 +3,21 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Node.js related files
+node_modules/
+
+# OS generated files
+.DS_Store
+
+# Editor specific files
+*.log
+*.tlog
+*.log.*
+
+# Application configuration files (if applicable)
+config.js
+
+
 # User-specific files
 *.rsuser
 *.suo
