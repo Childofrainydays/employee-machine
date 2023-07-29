@@ -1,12 +1,20 @@
+-- make sure there's no database with the same name
+DROP DATABASE IF EXISTS employee_tracker_db;
+-- create a new database
+CREATE DATABASE employee_tracker_db;
+-- use the new database
+USE employee_tracker_db;
+
 -- File for defining the database schema
 -- Create department table
 CREATE TABLE department (
     -- primary key defines the unique id for each department
+    -- INT means that the id is an integer
     -- Resource: https://www.w3schools.com/sql/sql_primarykey.asp
     id INT PRIMARY KEY,
     -- name is the name of the department
     -- VARCHAR(30) means that the name cannot be more than 30 characters
-    name VARCHAR(30)
+    department_name VARCHAR(30)
 );
 
 -- Create role table
@@ -14,7 +22,7 @@ CREATE TABLE role (
     -- primary key defines the unique id for each role
     id INT PRIMARY KEY,
     -- title is the name of the role
-    title VARCHAR(30),
+    role_title VARCHAR(30),
     -- salary is the amount of money the role makes
     -- DECIMAL(10,2) means that the salary can have up to 10 digits, with 2 of them being after the decimal point
     -- Resource: https://www.w3schools.com/sql/sql_datatypes.asp
@@ -30,9 +38,7 @@ CREATE TABLE role (
 CREATE TABLE employee (
     -- primary key defines the unique id for each employee
     id INT PRIMARY KEY,
-    -- first_name is the first name of the employee
     first_name VARCHAR(30),
-    -- last_name is the last name of the employee
     last_name VARCHAR(30),
     -- role_id is the id of the role that the employee has
     role_id INT,
