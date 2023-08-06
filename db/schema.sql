@@ -26,12 +26,13 @@ CREATE TABLE role (
     -- salary is the amount of money the role makes
     -- DECIMAL(10,2) means that the salary can have up to 10 digits, with 2 of them being after the decimal point
     -- Resource: https://www.w3schools.com/sql/sql_datatypes.asp
-    salary DECIMAL(10,2),
+    salary INT NOT NULL,
     -- department_id is the id of the department that the role belongs to
     department_id INT,
     -- FOREIGN KEY (department_id) REFERENCES department(id) means that the department_id must match an id in the department table
     -- Resource: https://www.w3schools.com/sql/sql_foreignkey.asp
     FOREIGN KEY (department_id) REFERENCES department(id)
+    ON DELETE SET NULL
 );
 
 -- Create employee table

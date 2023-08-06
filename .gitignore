@@ -17,7 +17,6 @@ node_modules/
 # Application configuration files (if applicable)
 config.js
 
-
 # User-specific files
 *.rsuser
 *.suo
