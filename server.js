@@ -29,7 +29,7 @@ const db = mysql.createConnection(
 
 // addDepartment();
 // addRole();
-addEmployee(); 
+// addEmployee(); 
 
 // Add a department
 async function addDepartment() {
@@ -46,6 +46,82 @@ async function addDepartment() {
     console.log(err);
   }
 }
+
+// Function to display the main menu and process user selection
+async function mainMenu() {
+    const userOptions = [
+      {
+        name: 'menu',
+        type: 'list',
+        message: 'What would you like to do?',
+        choices: [
+          'View all departments',
+          'View all roles',
+          'View all employees',
+          'Add a department',
+          'Add a role',
+          'Add an employee',
+          'Update an employee role',
+          'Exit',
+        ],
+      },
+    ];
+  
+    try {
+      const { menu } = await inquirer.prompt(userOptions);
+  
+      switch (menu) {
+        case 'View all departments':
+          // viewDepartments(true);
+          console.log('View all departments');
+          mainMenu(); // Ask again
+          break;
+        case 'View all roles':
+          // viewRoles(true);
+          mainMenu(); // Ask again
+          break;
+        case 'View all employees':
+          // viewEmployees(true);
+          mainMenu(); // Ask again
+          break;
+        case 'Add a department':
+          // addDepartment();
+          mainMenu(); // Ask again
+          break;
+        case 'Add a role':
+          // addRole();
+          mainMenu(); // Ask again
+          break;
+        case 'Add an employee':
+          // addEmployee();
+          mainMenu(); // Ask again
+          break;
+        case 'Update an employee role':
+          // updateEmployeeRole();
+          mainMenu(); // Ask again
+          break;
+        case 'Exit':
+          db.end(function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Goodbye');
+            }
+          });
+          break;
+        default:
+          console.log(`Invalid action: ${menu}`);
+          mainMenu(); // Ask again
+          break;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  // Call the mainMenu function to start the CLI
+  mainMenu();
+
 
 // Add a role
 async function addRole() {
