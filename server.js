@@ -27,7 +27,8 @@ const db = mysql.createConnection(
     console.log(`Connected to the employee_db database.`)
 );
 
-addDepartment();
+// addDepartment();
+addRole();
 
 // Add a department
 async function addDepartment() {
@@ -46,11 +47,62 @@ async function addDepartment() {
 }
 
 // Add a role
-function addRole() {
-
+async function addRole() {
+    try {
+      const { userRole, salary, department_id } = await inquirer.prompt([
+    {
+        name: "userRole",
+        type: "input",
+        message: "Enter the new role name:",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "Enter the salary for this role:",
+      },
+      {
+        name: "department_id",
+        type: "input",
+      },
+    ] 
+    );
+  
+      db.query(`INSERT INTO role (role_title, salary, department_id) VALUES ('${userRole}', ${salary}, ${department_id})`);
+      console.log(`${userRole} has been added to departments`);
+    } catch (err) {
+      console.log(err);
+    }
 }
 
 // // Add an employee
+async function addEmployee() {
+    try {
+      const { userRole } = await inquirer.prompt([
+    {
+        name: "firstName",
+        type: "input",
+        message: "Enter the employee name:",
+      },
+      {
+        name: "lastName",
+        type: "input",
+        message: "Enter:",
+      },
+      {
+        name: "role_id",
+        type: "input",
+      },
+    ] 
+    );
+  
+      db.query(`INSERT INTO role (role_title, salary, department_id) VALUES ('${userRole}', ${salary}, ${department_id})`);
+      console.log(`${userRole} has been added to departments`);
+    } catch (err) {
+      console.log(err);
+    }
+}
+
+
 // async function main() {
 //     const answers = await inquirer.prompt(cliQuestions);
 
