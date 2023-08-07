@@ -3,7 +3,8 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const express = require('express');
 // // Thanks to Sean and Todd for this one 
-// const cTable = require('console.table');
+const cTable = require('console.table');
+const e = require('express');
 
 // port and app variables
 const PORT = process.env.PORT || 3001;
@@ -27,24 +28,27 @@ const db = mysql.createConnection(
     console.log(`Connected to the employee_db database.`)
 );
 
-// addDepartment();
 // addRole();
 // addEmployee(); 
 
 // Add a department
 async function addDepartment() {
-  try {
     const { userDepartment } = await inquirer.prompt({
       name: "userDepartment",
       type: "input",
       message: "Enter the new department name:",
     });
 
-    db.query(`INSERT INTO department (department_name) VALUES ('${userDepartment}')`);
+    db.query(`INSERT INTO department (department_name) VALUES ('${userDepartment}')`, (err, result) => { 
     console.log(`${userDepartment} has been added to departments`);
-  } catch (err) {
+   if (err) {
     console.log(err);
-  }
+  } else {
+    const table = cTable.getTable(result);
+    console.log('\n' + table);
+    mainMenu(); // Ask again
+  }  
+ });
 }
 
 // Function to display the main menu and process user selection
@@ -72,34 +76,81 @@ async function mainMenu() {
   
       switch (menu) {
         case 'View all departments':
-          // viewDepartments(true);
-          console.log('View all departments');
-          mainMenu(); // Ask again
+            db.query(`SELECT * FROM department`, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const table = cTable.getTable(result);
+                    console.log('\n' + table);
+                    mainMenu(); // Ask again
+                }
+            });
           break;
+
         case 'View all roles':
-          // viewRoles(true);
-          mainMenu(); // Ask again
+            db.query(`SELECT * FROM role`, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const table = cTable.getTable(result);
+                    console.log('\n' + table);
+                    mainMenu(); // Ask again
+                }
+            });
           break;
+
         case 'View all employees':
-          // viewEmployees(true);
-          mainMenu(); // Ask again
+          db.query(`SELECT * FROM employee`, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const table = cTable.getTable(result);
+              console.log('\n' + table);
+              mainMenu(); // Ask again
+            }
+          });
           break;
+
         case 'Add a department':
-          // addDepartment();
-          mainMenu(); // Ask again
-          break;
+            addDepartment();
+            break;
+
         case 'Add a role':
-          // addRole();
-          mainMenu(); // Ask again
+            db.query(`INSERT INTO role (role_title, salary, department_id) VALUES ('${userRole}', ${salary}, ${department_id})`, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const table = cTable.getTable(result);
+                    console.log('\n' + table);
+                    mainMenu(); // Ask again
+                }
+            });
           break;
+
         case 'Add an employee':
-          // addEmployee();
-          mainMenu(); // Ask again
+            db.query(`SELECT * FROM employee`, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    const table = cTable.getTable(result);
+                    console.log('\n' + table);
+                    mainMenu(); // Ask again
+                }
+            });
           break;
+
         case 'Update an employee role':
-          // updateEmployeeRole();
-          mainMenu(); // Ask again
+            db.query(`SELECT * FROM employee`, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {    
+                    const table = cTable.getTable(result);
+                    console.log('\n' + table);
+                    mainMenu(); // Ask again
+                }
+            });
           break;
+
         case 'Exit':
           db.end(function (err) {
             if (err) {
