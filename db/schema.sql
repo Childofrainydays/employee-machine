@@ -11,7 +11,7 @@ CREATE TABLE department (
     -- primary key defines the unique id for each department
     -- INT means that the id is an integer
     -- Resource: https://www.w3schools.com/sql/sql_primarykey.asp
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY ,
     -- name is the name of the department
     -- VARCHAR(30) means that the name cannot be more than 30 characters
     department_name VARCHAR(30)
@@ -20,7 +20,7 @@ CREATE TABLE department (
 -- Create role table
 CREATE TABLE role (
     -- primary key defines the unique id for each role
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     -- title is the name of the role
     role_title VARCHAR(30),
     -- salary is the amount of money the role makes
@@ -38,7 +38,7 @@ CREATE TABLE role (
 -- Create employee table
 CREATE TABLE employee (
     -- primary key defines the unique id for each employee
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     -- role_id is the id of the role that the employee has
