@@ -28,7 +28,8 @@ const db = mysql.createConnection(
 );
 
 // addDepartment();
-addRole();
+// addRole();
+addEmployee(); 
 
 // Add a department
 async function addDepartment() {
@@ -77,30 +78,35 @@ async function addRole() {
 // // Add an employee
 async function addEmployee() {
     try {
-      const { userRole } = await inquirer.prompt([
+      const { first_name, last_name, role_id, manager_id } = await inquirer.prompt([
     {
-        name: "firstName",
+        name: "first_name",
         type: "input",
-        message: "Enter the employee name:",
+        message: "Enter the employee's first name:",
       },
       {
-        name: "lastName",
+        name: "last_name",
         type: "input",
-        message: "Enter:",
+        message: "Enter the employee's last name:",
       },
       {
         name: "role_id",
         type: "input",
       },
+      {
+        name: "manager_id",
+        type: "input",
+      },
     ] 
     );
   
-      db.query(`INSERT INTO role (role_title, salary, department_id) VALUES ('${userRole}', ${salary}, ${department_id})`);
-      console.log(`${userRole} has been added to departments`);
+      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ('${first_name}', '${last_name}', ${role_id}, ${manager_id})`);
+      console.log(`${last_name} has been added to departments`);
     } catch (err) {
       console.log(err);
     }
 }
+
 
 
 // async function main() {
